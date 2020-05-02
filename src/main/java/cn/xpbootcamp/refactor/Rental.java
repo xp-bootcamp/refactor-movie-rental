@@ -1,10 +1,22 @@
 package cn.xpbootcamp.refactor;
 
+import cn.xpbootcamp.refactor.service.CalculateRentalAmount;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.ServiceLoader;
+
 public class Rental {
 
     Movie movie;
     private int daysRented;
     private double rentalAmount;
+    private static Map<Integer, CalculateRentalAmount> ioc = new HashMap<Integer, CalculateRentalAmount>();
+
+    static {
+        ServiceLoader<CalculateRentalAmount> serviceLoader = ServiceLoader.load(CalculateRentalAmount.class);
+        serviceLoader.forEach(service -> ioc.put(service.getMovieType(), service));
+    }
 
     Rental(Movie movie, int daysRented) {
         this.movie = movie;
@@ -15,22 +27,9 @@ public class Rental {
         return rentalAmount;
     }
 
-    void calculateRentalAmount() {
-        switch (movie.getMovieType()) {
-            case Movie.HISTORY:
-                rentalAmount += 2;
-                if (daysRented > 2)
-                    rentalAmount += (daysRented - 2) * 1.5;
-                break;
-            case Movie.NEW_RELEASE:
-                rentalAmount += daysRented * 3;
-                break;
-            case Movie.CAMPUS:
-                rentalAmount += 1.5;
-                if (daysRented > 3)
-                    rentalAmount += (daysRented - 3) * 1.5;
-                break;
-        }
+    void buildRentalAmount(StringBuilder statementResult) {
+        calculateRentalAmount();
+        addRentalFigure(statementResult);
     }
 
     int addFrequentRenterPoint(int frequentRenterPoints) {
@@ -40,15 +39,14 @@ public class Rental {
         return frequentRenterPoints;
     }
 
-    void addRentalFigure(StringBuilder statementResult) {
-        statementResult.append("\t")
-              .append(movie.getMovieTitle())
-              .append("\t")
-              .append(rentalAmount).append("\n");
+    private void calculateRentalAmount() {
+        rentalAmount = ioc.get(movie.getMovieType()).calculateRentalAmount(daysRented, rentalAmount);
     }
 
-    void buildRentalAmount(StringBuilder statementResult) {
-        calculateRentalAmount();
-        addRentalFigure(statementResult);
+    private void addRentalFigure(StringBuilder statementResult) {
+        statementResult.append("\t")
+                .append(movie.getMovieTitle())
+                .append("\t")
+                .append(rentalAmount).append("\n");
     }
 }
