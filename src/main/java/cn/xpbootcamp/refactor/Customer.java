@@ -52,7 +52,7 @@ public class Customer {
 
             //show figures for this rental
             statementResult.append("\t")
-                  .append(each.getMovie().getTitle())
+                  .append(each.getMovie().getMovieTitle())
                   .append("\t")
                   .append(thisAmount).append("\n");
             totalAmount += thisAmount;
