@@ -4,6 +4,7 @@ public class Rental {
 
     private Movie movie;
     private int daysRented;
+    private double rentalAmount;
 
     Rental(Movie movie, int daysRented) {
         this.movie = movie;
@@ -18,4 +19,11 @@ public class Rental {
         return daysRented;
     }
 
+    public double getRentalAmount() {
+        return rentalAmount;
+    }
+
+    public void setRentalAmount(double rentalAmount) {
+        this.rentalAmount = rentalAmount;
+    }
 }
