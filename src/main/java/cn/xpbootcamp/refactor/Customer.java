@@ -3,6 +3,8 @@ package cn.xpbootcamp.refactor;
 import java.util.ArrayList;
 import java.util.List;
 
+import static cn.xpbootcamp.refactor.MovieType.*;
+
 public class Customer {
 
     private final String name;
@@ -44,7 +46,7 @@ public class Customer {
     private StringBuilder buildRow(Rental rental, double thisAmount) {
         StringBuilder result = new StringBuilder();
         result.append("\t")
-                .append(rental.getMovie().getTitle())
+                .append(rental.getMovie().getName())
                 .append("\t")
                 .append(thisAmount).append("\n");
         return result;
@@ -52,7 +54,7 @@ public class Customer {
 
     private int countPoints(int frequentRenterPoints, Rental rental) {
         frequentRenterPoints++;
-        if ((rental.getMovie().getPriceCode() == Movie.NEW_RELEASE) && rental.getDaysRented() > 1) {
+        if ((rental.getMovie().getType() == NEW_RELEASE) && rental.getDaysRented() > 1) {
             frequentRenterPoints++;
         }
         return frequentRenterPoints;
@@ -60,16 +62,16 @@ public class Customer {
 
     private double amountFor(Rental rental) {
         double thisAmount = 0d;
-        switch (rental.getMovie().getPriceCode()) {
-            case Movie.HISTORY:
+        switch (rental.getMovie().getType()) {
+            case HISTORY:
                 thisAmount += 2;
                 if (rental.getDaysRented() > 2)
                     thisAmount += (rental.getDaysRented() - 2) * 1.5;
                 break;
-            case Movie.NEW_RELEASE:
+            case NEW_RELEASE:
                 thisAmount += rental.getDaysRented() * 3;
                 break;
-            case Movie.CAMPUS:
+            case CAMPUS:
                 thisAmount += 1.5;
                 if (rental.getDaysRented() > 3)
                     thisAmount += (rental.getDaysRented() - 3) * 1.5;
