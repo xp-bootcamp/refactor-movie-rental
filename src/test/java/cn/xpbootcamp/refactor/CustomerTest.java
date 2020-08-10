@@ -15,7 +15,7 @@ class CustomerTest {
         assertThat("Rental Record for lisa：\n" +
                 "\t同桌的你\t1.5\n" +
                 "Amount owed is 1.5\n" +
-                "You earned 1 frequent renter points").isEqualTo(customer.statement());
+                "You earned 1 frequent renter points").isEqualTo(customer.stateReceipt());
     }
 
     @Test
@@ -26,7 +26,7 @@ class CustomerTest {
         assertThat("Rental Record for lisa：\n" +
                 "\t战狼2\t2.0\n" +
                 "Amount owed is 2.0\n" +
-                "You earned 1 frequent renter points").isEqualTo(customer.statement());
+                "You earned 1 frequent renter points").isEqualTo(customer.stateReceipt());
     }
 
     @Test
@@ -37,7 +37,7 @@ class CustomerTest {
         assertThat("Rental Record for lisa：\n" +
                 "\t宠爱\t3.0\n" +
                 "Amount owed is 3.0\n" +
-                "You earned 1 frequent renter points").isEqualTo(customer.statement());
+                "You earned 1 frequent renter points").isEqualTo(customer.stateReceipt());
     }
 
     @Test
@@ -52,7 +52,7 @@ class CustomerTest {
                 "\t宠爱\t15.0\n" +
                 "\t战狼2\t8.0\n" +
                 "Amount owed is 26.0\n" +
-                "You earned 4 frequent renter points").isEqualTo(customer.statement());
+                "You earned 4 frequent renter points").isEqualTo(customer.stateReceipt());
     }
 
 }
