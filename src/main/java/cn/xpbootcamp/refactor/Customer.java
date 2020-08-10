@@ -3,8 +3,6 @@ package cn.xpbootcamp.refactor;
 import java.util.ArrayList;
 import java.util.List;
 
-import static cn.xpbootcamp.refactor.MovieType.*;
-
 public class Customer {
 
     private final String name;
@@ -27,9 +25,9 @@ public class Customer {
         int renterPoints = 0;
         StringBuilder result = new StringBuilder("Rental Record for " + getName() + "：\n");
         for (Rental rental : rentals) {
-            renterPoints = countPoints(renterPoints, rental);
-            double thisAmount = amountFor(rental);
-            result.append(buildRow(rental, thisAmount));
+            renterPoints += rental.countPoints();
+            double thisAmount = rental.amountFor();
+            result.append(rental.buildRow());
             totalAmount += thisAmount;
         }
         result.append(buildReceiptFooter(totalAmount, renterPoints));
@@ -41,27 +39,6 @@ public class Customer {
         result.append("Amount owed is ").append(totalAmount).append("\n");
         result.append("You earned ").append(frequentRenterPoints).append(" frequent renter points");
         return result;
-    }
-
-    private StringBuilder buildRow(Rental rental, double thisAmount) {
-        StringBuilder result = new StringBuilder();
-        result.append("\t")
-                .append(rental.getMovie().getName())
-                .append("\t")
-                .append(thisAmount).append("\n");
-        return result;
-    }
-
-    private int countPoints(int frequentRenterPoints, Rental rental) {
-        frequentRenterPoints++;
-        if ((rental.getMovie().getType() == NEW_RELEASE) && rental.getDaysRented() > 1) {
-            frequentRenterPoints++;
-        }
-        return frequentRenterPoints;
-    }
-
-    private double amountFor(Rental rental) {
-        return rental.getMovie().amountBill(rental.getDaysRented());
     }
 
 }

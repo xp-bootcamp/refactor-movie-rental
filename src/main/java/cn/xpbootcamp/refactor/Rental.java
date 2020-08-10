@@ -1,9 +1,11 @@
 package cn.xpbootcamp.refactor;
 
+import cn.xpbootcamp.refactor.movie.Movie;
+
 public class Rental {
 
-    private Movie movie;
-    private int daysRented;
+    private final Movie movie;
+    private final int daysRented;
 
     Rental(Movie movie, int daysRented) {
         this.movie = movie;
@@ -14,8 +16,20 @@ public class Rental {
         return movie;
     }
 
-    int getDaysRented() {
-        return daysRented;
+    public double amountFor() {
+        return movie.amountBill(daysRented);
     }
 
+    public StringBuilder buildRow() {
+        StringBuilder result = new StringBuilder();
+        result.append("\t")
+                .append(getMovie().getName())
+                .append("\t")
+                .append(amountFor()).append("\n");
+        return result;
+    }
+
+    public int countPoints() {
+        return movie.countPoint(daysRented);
+    }
 }

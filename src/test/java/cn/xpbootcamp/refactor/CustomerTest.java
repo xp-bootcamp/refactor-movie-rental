@@ -1,5 +1,6 @@
 package cn.xpbootcamp.refactor;
 
+import cn.xpbootcamp.refactor.movie.Movie;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
