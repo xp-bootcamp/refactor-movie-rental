@@ -1,6 +1,6 @@
 package cn.xpbootcamp.refactor;
 
-public class Movie {
+public abstract class Movie {
 
     private final String name;
     private final MovieType type;
@@ -10,6 +10,18 @@ public class Movie {
         this.type = type;
     }
 
+    public static Movie createCampusMovie(String name) {
+        return new CampusMovie(name, MovieType.CAMPUS);
+    }
+
+    public static Movie createNewReleaseMovie(String name) {
+        return new NewReleaseMovie(name, MovieType.NEW_RELEASE);
+    }
+
+    public static Movie createHistoryMovie(String name) {
+        return new HistoryMovie(name, MovieType.HISTORY);
+    }
+
     MovieType getType() {
         return type;
     }
@@ -17,4 +29,6 @@ public class Movie {
     String getName() {
         return name;
     }
+
+    public abstract double amountBill(int daysRented);
 }

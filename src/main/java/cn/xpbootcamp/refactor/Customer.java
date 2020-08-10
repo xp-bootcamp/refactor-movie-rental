@@ -61,23 +61,7 @@ public class Customer {
     }
 
     private double amountFor(Rental rental) {
-        double thisAmount = 0d;
-        switch (rental.getMovie().getType()) {
-            case HISTORY:
-                thisAmount += 2;
-                if (rental.getDaysRented() > 2)
-                    thisAmount += (rental.getDaysRented() - 2) * 1.5;
-                break;
-            case NEW_RELEASE:
-                thisAmount += rental.getDaysRented() * 3;
-                break;
-            case CAMPUS:
-                thisAmount += 1.5;
-                if (rental.getDaysRented() > 3)
-                    thisAmount += (rental.getDaysRented() - 3) * 1.5;
-                break;
-        }
-        return thisAmount;
+        return rental.getMovie().amountBill(rental.getDaysRented());
     }
 
 }
